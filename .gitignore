@@ -1,0 +1,13 @@
+# Mengabaikan file model Machine Learning
+backend/models/*.joblib
+
+# Mengabaikan dataset agar tidak melanggar limit GitHub
+backend/dataset/*.csv
+
+# Mengabaikan folder cache Python & Node.js
+__pycache__/
+frontend/node_modules/
+frontend/.next/
+
+# Mengabaikan environment variables
+.env
