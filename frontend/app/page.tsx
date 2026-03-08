@@ -66,8 +66,15 @@ export default function Home() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...formData,
-          carat: parseFloat(String(formData.carat)),
+          carat:   parseFloat(String(formData.carat)),
+          cut:     formData.cut,
+          color:   formData.color,
+          clarity: formData.clarity,
+          depth:   parseFloat(String(formData.depth)),
+          table:   parseFloat(String(formData.table)),
+          x:       parseFloat(String(formData.x)),
+          y:       parseFloat(String(formData.y)),
+          z:       parseFloat(String(formData.z)),
         }),
       });
       const data = await response.json();
@@ -257,6 +264,31 @@ export default function Home() {
                     >
                       {c}
                     </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* DIMENSI FISIK */}
+              <div className="bg-black/20 p-5 rounded-2xl border border-white/5">
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 block">Dimensi Fisik (mm / %)</label>
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                  {([
+                    { field: 'depth' as const, label: 'Depth %', min: 40,  max: 80,  step: 0.1 },
+                    { field: 'table' as const, label: 'Table %', min: 40,  max: 100, step: 0.1 },
+                    { field: 'x'     as const, label: 'X (mm)',  min: 0,   max: 12,  step: 0.01 },
+                    { field: 'y'     as const, label: 'Y (mm)',  min: 0,   max: 12,  step: 0.01 },
+                    { field: 'z'     as const, label: 'Z (mm)',  min: 0,   max: 8,   step: 0.01 },
+                  ]).map(({ field, label, min, max, step }) => (
+                    <div key={field}>
+                      <p className="text-[10px] text-slate-500 font-mono uppercase mb-1">{label}</p>
+                      <input
+                        type="number"
+                        min={min} max={max} step={step}
+                        value={formData[field]}
+                        onChange={(e) => updateField(field, e.target.value)}
+                        className="w-full bg-slate-900/80 border border-white/10 text-white text-sm font-mono text-center p-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 hover:border-white/20 transition"
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
